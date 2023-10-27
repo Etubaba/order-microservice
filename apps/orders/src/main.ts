@@ -1,8 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { OrdersModule } from './orders.module';
+import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(OrdersModule);
-  await app.listen(3000);
+  app.useGlobalPipes(new ValidationPipe());
+
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('order_app.port');
+
+  await app.listen(port, () => {
+    console.log(`Listening at port ${port}`);
+  });
 }
 bootstrap();
