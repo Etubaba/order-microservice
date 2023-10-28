@@ -17,9 +17,10 @@ export class OrderService {
         // this function converts billing client to a promise
         this.billingClient.emit('order_created', {
           // emit order details to billing webservice
-          createOrderDto,
+          data: createOrderDto,
         }),
       );
+
       const order = await this.prismaService.order.create({
         data: createOrderDto,
       });
@@ -28,6 +29,7 @@ export class OrderService {
         data: order,
       };
     } catch (err) {
+      console.log(err.message);
       throw err;
     }
   }

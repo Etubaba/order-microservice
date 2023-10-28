@@ -5,7 +5,7 @@ import { PrismaModule } from '@app/common/database/prisma.module';
 import { OrderModule } from './modules/order/order.module';
 import { ConfigModule } from '@nestjs/config';
 import config from 'libs/common/config';
-import { RMQModule } from '@app/common';
+import { PrismaService, RMQModule } from '@app/common';
 import { BILLING_SERVICE } from './constant';
 
 @Module({
@@ -16,6 +16,6 @@ import { BILLING_SERVICE } from './constant';
     RMQModule.register({ name: BILLING_SERVICE }),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService],
+  providers: [OrdersService, PrismaService],
 })
 export class OrdersModule {}

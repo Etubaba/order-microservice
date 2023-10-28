@@ -21,10 +21,8 @@ export class RMQModule {
             useFactory: (configService: ConfigService) => ({
               transport: Transport.RMQ,
               options: {
-                urls: [configService.get<string>('rabbitmq.RABBIT_MQ_URI')],
-                queue: configService.get<string>(
-                  `rabbitMq.RABBIT_MQ_${name}_QUEUE`,
-                ),
+                urls: [configService.get<string>('RABBIT_MQ_URI')],
+                queue: configService.get<string>(`RABBIT_MQ_${name}_QUEUE`),
               },
             }),
             inject: [ConfigService],
