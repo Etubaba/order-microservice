@@ -7,8 +7,10 @@ services:
     command: yarn start:dev orders
     env_file:
       - ./apps/orders/.env
-    # depends_on:
-    #   -   
+    depends_on:
+      - rabbitmq
+      - billing
+      - auth
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -28,6 +30,22 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+
+  auth:
+    build: 
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: yarn start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3001:3001"
   
   
   rabbitmq:

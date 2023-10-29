@@ -10,6 +10,8 @@ export class BillingService {
   bill(data: any) {
     this.logger.log(data);
 
+    //handle billing payment here
+
     console.log('sec=>', data);
   }
 }
